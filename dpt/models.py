@@ -85,6 +85,27 @@ class DPT(BaseModel):
 
         return out
 
+"""self designed baseline model for reflection removal"""
+class DPTRRModel(DPT):
+    def __init__(
+            self, path=None, non_negative=True, **kwargs
+    ):
+        features = kwargs["features"] if "features" in kwargs else 256
+
+        head = nn.Sequential(
+            nn.Conv2d(features, features // 2, kernel_size=3, stride=1, padding=1),
+            Interpolate(scale_factor=2, mode="bilinear", align_corners=True),
+            nn.Conv2d(features // 2, 32, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(True),
+            nn.Conv2d(32, 3, kernel_size=1, stride=1, padding=0),
+            nn.ReLU(True) if non_negative else nn.Identity(),
+            nn.Identity(),
+        )
+
+        super().__init__(head, **kwargs)
+
+        if path is not None:
+            self.load(path)
 
 class DPTDepthModel(DPT):
     def __init__(

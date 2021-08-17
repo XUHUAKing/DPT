@@ -217,3 +217,18 @@ def write_segm_img(path, image, labels, palette="detail", alpha=0.5):
     out.save(path + ".png")
 
     return
+
+def write_rgb_img(path, rgb, bits=1):
+    """Write output rgb image to png file.
+
+    Args:
+        path (str): filepath without extension
+        rgb (array): rgb image
+    """
+    out = rgb
+    if bits == 1:
+        cv2.imwrite(path + ".png", out.astype("uint8"), [cv2.IMWRITE_PNG_COMPRESSION, 0])
+    elif bits == 2:
+        cv2.imwrite(path + ".png", out.astype("uint16"), [cv2.IMWRITE_PNG_COMPRESSION, 0])
+
+    return
