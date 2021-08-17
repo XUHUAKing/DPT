@@ -40,6 +40,7 @@ def run(input_path, output_path, model_path, model_type="dpt_rr", optimize=True)
             non_negative=True,
             enable_attention_hooks=False,
         )
+        import pdb; pdb.set_trace()
         normalization = NormalizeImage(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
     else:
         assert (
@@ -156,16 +157,16 @@ if __name__ == "__main__":
 
     parser.set_defaults(optimize=True)
     parser.set_defaults(kitti_crop=False)
-    parser.set_defaults(absolute_depth=False)
 
     args = parser.parse_args()
-
+    """
     default_models = {
-        "dpt_rr": "weights/dpt_large-midas-2f21e586.pt",
+        "dpt_rr": "weights/dpt_hybrid-midas-501f0c75.pt",
     }
 
     if args.model_weights is None:
         args.model_weights = default_models[args.model_type]
+    """
 
     # set torch options
     torch.backends.cudnn.enabled = True
