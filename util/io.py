@@ -225,7 +225,7 @@ def write_rgb_img(path, rgb, bits=1):
         path (str): filepath without extension
         rgb (array): rgb image
     """
-    out = rgb
+    out = np.moveaxis(rgb, 0, -1) # move channels to last axis
     if bits == 1:
         cv2.imwrite(path + ".png", out.astype("uint8"), [cv2.IMWRITE_PNG_COMPRESSION, 0])
     elif bits == 2:

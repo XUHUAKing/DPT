@@ -106,8 +106,8 @@ def run(input_path, output_path, model_path, model_type="dpt_rr", optimize=True)
             prediction = model.forward(sample)
             prediction = (
                 torch.nn.functional.interpolate(
-                    prediction.unsqueeze(1),
-                    size=img.shape,
+                    prediction,
+                    size=img.shape[:2],
                     mode="bicubic",
                     align_corners=False,
                 )
